@@ -3,7 +3,11 @@ var Customer = mongoose.model('Customer');
 
 /**
  * Create a customer matching the database schema - DONE & TESTED 
- For example, from a post client URL = http://localhost:3000/customer/new
+ For example, from a post client 
+ URL = http://localhost:3000/customer/new
+ Headers : 
+ 	Content-Type: application/json && 
+ 	Accept: application/json 
  TYPE = POST Data =
  <data starts here> 
  	{
