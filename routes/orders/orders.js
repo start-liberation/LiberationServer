@@ -279,3 +279,49 @@ exports.update = function (req, res) {
 		}
 	});
 };
+
+exports.getNew = function(req, res) {
+	console.log("Getting a list of all new orders");
+	Order.findByStatus(
+		{status: 0},
+		function (err, orderList) {
+			if(!err) {
+				console.log("Order = " + orderList);
+				if (req.accepts('json')) {
+					console.log("Accepting JSON...");
+					res.json(orderList);
+				}
+				else {
+					var orderJSONString = JSON.stringify(orderList);
+					var orderJSON = JSON.parse(orderJSONString);
+					res.render('orders/order-page', {rows : orderJSON});
+				}
+			} else {
+				console.log("Error: " + err);
+				res.json({"status": "error", "error":"Error finding Orders"});
+			}
+		});
+};
+exports.getAccepted = function(req, res) {
+	console.log("Getting a list of all accepted orders");
+	Order.findByStatus(
+		{status: 1},
+		function (err, orderList) {
+			if(!err) {
+				console.log("Order = " + orderList);
+				if (req.accepts('json')) {
+					console.log("Accepting JSON...");
+					res.json(orderList);
+				}
+				else {
+					var orderJSONString = JSON.stringify(orderList);
+					var orderJSON = JSON.parse(orderJSONString);
+					res.render('orders/order-page', {rows : orderJSON});
+				}
+			} else {
+				console.log("Error: " + err);
+				res.json({"status": "error", "error":"Error finding Orders"});
+			}
+		});
+};
+

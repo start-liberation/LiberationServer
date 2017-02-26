@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var db = require('./model/db');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -14,6 +15,7 @@ var prescription = require('./routes/drug/prescription');
 var orders = require('./routes/orders/orders');
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +32,7 @@ app.use(session({secret:"samplesession", resave: true, saveUninitialized: false}
 
 app.use('/', routes);
 
-//USER ROUTES
+//Login ROUTES
 app.get('/login', customer.login);			//Login Form
 app.post('/login/:contact', customer.doLogin);		//Login action
 	
@@ -41,7 +43,7 @@ app.post('/customer/update/:contact', customer.udpate);		//Update customer profi
 app.post('/customer/login/:contact', customer.doLogin);		//Login action
 
 
-//VENDORServices
+//VENDOR Services
 app.post('/vendor/new', vendor.create);	//Register new vendor
 app.get('/vendor/:contact', vendor.profile);	//Get vendor profile
 app.post('/vendor/update/:contact', vendor.udpate);		//Update vendor profile
@@ -62,6 +64,8 @@ app.post('/orders/update/:orderId', orders.update);
 app.get('/orders/customer/:customerContact', orders.byUser);
 app.get('/orders/order/:orderId', orders.byOrderId);
 app.get('/orders/customer/:contact/:status', orders.byContact);
+app.get('/orders/new', orders.getNew);
+app.get('/orders/accepted', orders.getAccepted);
 app.get('/orders/vendor/:contact/:status', orders.byContact);
 app.get('/orders/customer/:contact', orders.byContact);
 app.get('/orders/vendor/:contact', orders.byContact);

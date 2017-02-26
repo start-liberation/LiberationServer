@@ -1,18 +1,86 @@
 <html>
 <head>
-<title>Nedmanage Services</title>
+<title>Medmanage Services</title>
+<link rel="stylesheet" type="text/css" href="services.css" media="screen" />
+<script type="text/javascript" src="servicesdata.js" ></script>
+<script type="text/javascript" src="services.js" ></script>
 </head>
 
 <body>
-This is the list of services available from this site
+<p>This is the list of services available from this site</p>
 
+<div class="category">
+
+  <!-- Section for categories. It will appear dynamically here -->
+  <!-- For example
+  <a href="javascript:void(0)" name="customer" class="catlink" onclick="openCategory(event, 'customer')">Customer</a>
+  <a href="javascript:void(0)" name="order"    class="catlink" onclick="openCategory(event, 'order')">Order</a>
+  <a href="javascript:void(0)" name="vendor"   class="catlink" onclick="openCategory(event, 'vendor')">Vendor</a>
+  -->
+  
+</div>
+
+<div id="customer_services" class="customer services">
+  <a href="javascript:void(0)" name="customer_service_create" class="customer service" onclick="openService(event, 'customer', 'create')">Create</a>
+  <a href="javascript:void(0)" name="customer_service_get" class="customer service" onclick="openService(event, 'customer', 'get')">Get</a>
+  <a href="javascript:void(0)" name="customer_service_update" class="customer service" onclick="openService(event, 'customer', 'update')">Update</a>
+  <a href="javascript:void(0)" name="customer_service_login" class="customer service" onclick="openService(event, 'customer', 'login')">Login</a>
+  <a href="javascript:void(0)" name="customer_service_delete" class="customer service" onclick="openService(event, 'customer', 'delete')">Delete</a>
+</div>
+
+<div id="order_services" class="order services">
+  <a href="javascript:void(0)" name="order_service_create" class="order service" onclick="openService(event, 'order, 'create')">Create</a>
+</div>
+
+<div id="vendor_services" class="vendor services">
+  <a href="javascript:void(0)" name="vendor_service_create" class="vendor service" onclick="openService(event, 'vendor' 'create')">Create</a>
+</div>
+
+<div id="servicedetail" class="customer servicedesc">
+  <table>
+    <tr>
+      <td class="prefix">Name</td>
+      <td class="value"><label id="name"></label><td>
+    </tr>
+    
+     <tr>
+      <td class="prefix">Description</td>
+      <td class="value"><label id="desc"></label><td>
+    </tr>
+    
+     <tr>
+      <td class="prefix">URL</td>
+      <td class="value"><label id="url"></label><td>
+    </tr>
+    
+     <tr>
+      <td class="prefix">Method</td>
+      <td class="value"><label id="method"></label><td>
+    </tr>
+    
+     <tr>
+      <td class="prefix">Data</td>
+      <td class="value"><pre><label id="data"></label></pre><td>
+    </tr>
+  </table>
+</div>
+
+<div>
 <pre>
-<h3>Create an Order</h3>
-	 For example, from a post client
-	   URL = http://medmanage.sytes.net/orders/new 
-	   TYPE = POST
-	   Data =
-	   <data starts here>
+Always use these HTTP Headers when requesting for the service
+
+ 	<b>Content-Type</b>: application/json
+ 	<b>Accept</b>: application/json 
+
+</pre>
+</div>
+
+<div>
+<!--    
+	For example, from a REST client
+	   URL    : <label id="url">http://medmanage.sytes.net/orders/new</label>
+	   TYPE   : <label id="method">Method</label>
+	   Data   : <label id="data">
 		 	{
 				"customerContact" : "9902455333", 
 				"vendorContact" : 918028450292, 
@@ -21,8 +89,51 @@ This is the list of services available from this site
 	  				{"drugName":"Saridon","strength":"500mg","quantity":"30"}
 				]
 			}
-	<data ends here>
-	</pre>
+		</label>
+-->
+
+<!--
+<br/>
+<h2>Login Services</h2>
+<pre>
+<a href="#">/login</a>                      // RequiresLogin Form
+<a href="#">/login/:contact</a>             //Login action
+	
+
+<h2>CUSTOMER Services</h2>
+<a href="#">/customer/new</a>               //Register new customer
+<a href="#">/customer/:contact</a>          //Get customer profile
+<a href="#">/customer/update/:contact</a>   //Update customer profile
+<a href="#">/customer/login/:contact</a>    //Login action
+
+
+<h2>VENDOR Services</h2>
+<a href="#">/vendor/new</a>	                //Register new vendor
+<a href="#">/vendor/:contact</a>            //Get vendor profile
+<a href="#">/vendor/update/:contact</a>     //Update vendor profile
+//app.post('/vendor/login/:contact</a>      //Login action
+
+<h2>USER DRUG PRESCRIPTION ROUTES</h2>
+<a href="#">/prescription/new</a>
+<a href="#">/prescription/new</a>
+<a href="#">/prescription/byuser/:contact</a>
+
+<h2>DRUG ROUTES</h2>
+<a href="#">/drug/new</a>
+<a href="#">/drug/new</a>
+
+<h2>ORDER ROUTES - DONE & TESTED</h2>
+<a href="#">/orders/new</a>
+<a href="#">/orders/update/:orderId</a>
+<a href="#">/orders/customer/:customerContact</a>
+<a href="#">/orders/order/:orderId</a>
+<a href="#">/orders/customer/:contact/:status</a>
+<a href="#">/orders/vendor/:contact/:status</a>
+<a href="#">/orders/customer/:contact</a>
+<a href="#">/orders/vendor/:contact</a>
+</pre>
+-->
+</div>
 </body>
 </html>
 	

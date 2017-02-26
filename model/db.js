@@ -145,7 +145,7 @@ orderSchema.statics.findByOrderId = function (orderId, callback) {
 orderSchema.statics.findByStatus = function (query, callback) {
 	console.log("params : " + JSON.stringify(query));
 	this.find(   query,
-				'orderId status',
+				'orderId status drugList',
 				{sort: 'orderId'},
 				callback);
 };
@@ -236,7 +236,7 @@ var vendorSchema = new mongoose.Schema({
 vendorSchema.statics.findByContact = function (contact, callback) {
 	this.findOne(
 	{ contact: contact },
-	'name contact email address lastLogin',
+	'name shopName contact email address lastLogin',
 	{sort: 'name'},
 	callback);
 };

@@ -29,6 +29,7 @@ exports.create = function(req, res) {
 		console.log("Address is :" + address );
 		Vendor.create({
 			name : req.body.name,
+			shopName : req.body.shopName,
 			contact : req.body.contact,
 			email : req.body.email,
 			address : address,
