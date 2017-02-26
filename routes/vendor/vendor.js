@@ -126,7 +126,7 @@ exports.profile = function(req, res) {
 						var profileJSONString = JSON.stringify(profile);
 						var profileJSON = JSON.parse(profileJSONString);
 						console.log('Contact:---> ' + profileJSON[0].contact);
-						res.render('user/prifile', {
+						res.render('user/profile', {
 							rows : profileJSON
 						});
 					}
