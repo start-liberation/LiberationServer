@@ -124,6 +124,15 @@ var orderSchema =  new mongoose.Schema({
 });
 
 //Find user orders to show on 'My Orders' screen - DONE & TESTED
+orderSchema.statics.findAll = function (callback) {
+	this.find(
+	{ },
+	'orderId status',
+	{sort: 'orderId'},
+	callback);
+};
+
+//Find user orders to show on 'My Orders' screen - DONE & TESTED
 orderSchema.statics.findByCustomerContact = function (customerContact, callback) {
 	this.find(
 	{ customerContact: customerContact },
@@ -142,9 +151,9 @@ orderSchema.statics.findByOrderId = function (orderId, callback) {
 };
 
 //Find user orders with status new - to show on orders list by status to a vendor - DONE & TESTED
-orderSchema.statics.findByStatus = function (query, callback) {
-	console.log("params : " + JSON.stringify(query));
-	this.find(   query,
+orderSchema.statics.findByStatus = function (status, callback) {
+	console.log("status : " + JSON.stringify(status));
+	this.find(   {status: parseInt(status)},
 				'orderId status drugList',
 				{sort: 'orderId'},
 				callback);
@@ -154,7 +163,17 @@ orderSchema.statics.findByStatus = function (query, callback) {
 orderSchema.statics.updateByOrderId = function (orderData, callback) {
 	
 	console.log("order id = " + orderData.orderId);
-	if ( (orderData.status === "1") || (orderData.status === "-1") ) {
+	this.findOneAndUpdate(
+			{ orderId: orderData.orderId },
+			{$set : {status: orderData.status,
+				acceptedOrRejectedAt: Date.now()
+				}
+			}, 
+			{new: true},
+			callback);
+
+	/*
+	if ( (orderData.status === 1) || (orderData.status === -1) ) {
 		this.findOneAndUpdate(
 				{ orderId: orderData.orderId },
 				{$set : {status: orderData.status,
@@ -163,7 +182,7 @@ orderSchema.statics.updateByOrderId = function (orderData, callback) {
 				}, 
 				{new: true},
 				callback);
-	} else if (orderData.status === "2") {
+	} else if (orderData.status === 2) {
 		this.findOneAndUpdate(
 				{ orderId: orderData.orderId },
 				{$set : {status: orderData.status,
@@ -172,7 +191,7 @@ orderSchema.statics.updateByOrderId = function (orderData, callback) {
 				}, 
 				{new: true},
 				callback); 
-	} else if (orderData.status === "3") {
+	} else if (orderData.status === 3) {
 		this.findOneAndUpdate(
 				{ orderId: orderData.orderId },
 				{$set : {status: orderData.status,
@@ -184,6 +203,7 @@ orderSchema.statics.updateByOrderId = function (orderData, callback) {
 	} else {
 		callback;
 	}
+	*/
 	
 };
 

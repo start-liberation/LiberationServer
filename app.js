@@ -59,13 +59,13 @@ app.get('/drug/new', drug.create);
 app.post('/drug/new', drug.doCreate);
 
 // ORDER ROUTES - DONE & TESTED
-app.post('/orders/new', orders.create);
-app.post('/orders/update/:orderId', orders.update);
+app.get('/orders', orders.list);	// list all orders irrespective of any filter
+app.post('/orders/new', orders.create);	// Create a new order
+app.post('/orders/update/:orderId', orders.update); 
 app.get('/orders/customer/:customerContact', orders.byUser);
 app.get('/orders/order/:orderId', orders.byOrderId);
 app.get('/orders/customer/:contact/:status', orders.byContact);
-app.get('/orders/new', orders.getNew);
-app.get('/orders/accepted', orders.getAccepted);
+app.get('/orders/status/:status', orders.getByStatus); // status = new/0,accepted/1, transit/2, delivered/3, rejected/-1
 app.get('/orders/vendor/:contact/:status', orders.byContact);
 app.get('/orders/customer/:contact', orders.byContact);
 app.get('/orders/vendor/:contact', orders.byContact);

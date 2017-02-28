@@ -121,6 +121,45 @@ exports.byOrderId = function(req, res) {
 
 /**
 
+List my previous orders  - DONE & TESTED
+	Request: http://localhost:3000/orders/customer/9902455333
+
+	Response: 
+	[
+		{"_id":"5743240fa27be8f92844fde4","orderId":1,"status":0},
+		{"_id":"57432479a27be8f92844fde7","orderId":2,"status":0}
+	]
+	
+	Empty response : [] if there are not matching orders
+	
+	Ofcourse, you could then extract the orderId from the response and retrieve the order details using the /orders/order/:orderid API
+
+*/
+exports.list = function(req, res) {
+	console.log("Getting all orders ...");
+	Order.findAll(
+		function (err, orderList) {
+			if(!err) {
+				console.log("Order = " + orderList);
+				if (req.accepts('json')) {
+					console.log("Accepting JSON...");
+					res.json(orderList);
+				}
+				else {
+					var orderJSONString = JSON.stringify(orderList);
+					var orderJSON = JSON.parse(orderJSONString);
+					res.render('orders/order-page', {rows : orderJSON});
+				}
+			} else {
+				console.log("Error: " + err);
+				res.json({"status": "error", "error":"Error finding Orders"});
+			}
+		});
+};
+
+
+/**
+
   List my previous orders  - DONE & TESTED
   	Request: http://localhost:3000/orders/customer/9902455333
 
@@ -280,10 +319,31 @@ exports.update = function (req, res) {
 	});
 };
 
-exports.getNew = function(req, res) {
-	console.log("Getting a list of all new orders");
+exports.getByStatus = function(req, res) {
+	// Validate the status first
+	var data = req.params.status;
+	var status;
+	if (isNaN(data)) {
+		if (data == "new") {
+			status = 0;
+		}
+		else if (data == "accepted") {
+			status = 1;
+		}
+		else if (data == "rejected") {
+			status = -1;
+		}
+	}
+	else {
+		status = parseInt(data);
+		if (status < -1 || status > 3) {
+			status = 0;
+		}
+	}
+		
+	console.log("Getting a list of all orders of this status");
 	Order.findByStatus(
-		{status: 0},
+		status,
 		function (err, orderList) {
 			if(!err) {
 				console.log("Order = " + orderList);
@@ -302,26 +362,6 @@ exports.getNew = function(req, res) {
 			}
 		});
 };
-exports.getAccepted = function(req, res) {
-	console.log("Getting a list of all accepted orders");
-	Order.findByStatus(
-		{status: 1},
-		function (err, orderList) {
-			if(!err) {
-				console.log("Order = " + orderList);
-				if (req.accepts('json')) {
-					console.log("Accepting JSON...");
-					res.json(orderList);
-				}
-				else {
-					var orderJSONString = JSON.stringify(orderList);
-					var orderJSON = JSON.parse(orderJSONString);
-					res.render('orders/order-page', {rows : orderJSON});
-				}
-			} else {
-				console.log("Error: " + err);
-				res.json({"status": "error", "error":"Error finding Orders"});
-			}
-		});
-};
+
+
 
