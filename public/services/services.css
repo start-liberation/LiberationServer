@@ -41,7 +41,7 @@ div.services {
 
 div.services a {
     float: left;
-    display: none;
+    display: block;
     color: black;
     text-align: center;
     padding: 14px 16px;

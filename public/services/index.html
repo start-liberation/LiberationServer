@@ -7,76 +7,56 @@
 </head>
 
 <body>
-<p>This is the list of services available from this site</p>
+  <p>This is the list of services available from this site</p>
 
-<div class="category">
+  <div id="toc">
+    <div id="category" class="category"></div>
+    <div id="servicesblock" class="servicesblock"></div>
+    <div id="details" class="details"></div>
+    <div id="servicedetail" class="customer servicedesc">
+      <table style="width: 100%" border="1">
+        <!--tr>
+          <td class="prefix">Name</td>
+          <td class="value"><label id="name"></label><td>
+        </tr-->
+        
+         <tr style="width: 100%">
+          <td class="prefix">Description</td>
+          <td style="width: 100%" class="value"><input style="width: 100%" type=text id="desc"></input><td>
+        </tr>
+        
+         <tr>
+          <td class="prefix">Method</td>
+          <td class="value"><input style="width: 100%" type=text id="method"></input><td>
+        </tr>
+        
+         <tr>
+          <td class="prefix">URL</td>
+          <td class="value"><input style="width: 100%" type=text id="url"></input><td>
+        </tr>
+        
+         <tr>
+          <td class="prefix">Data</td>
+          <td class="value"><pre><textarea style="width: 100%" id="data" style="height:150px"></textarea></pre><td>
+        </tr>
+      </table>
+      <br/>
+      <input id="postButton" align="center" style="width: 25%" type="submit" value="Try It"></input>
 
-  <!-- Section for categories. It will appear dynamically here -->
-  <!-- For example
-  <a href="javascript:void(0)" name="customer" class="catlink" onclick="openCategory(event, 'customer')">Customer</a>
-  <a href="javascript:void(0)" name="order"    class="catlink" onclick="openCategory(event, 'order')">Order</a>
-  <a href="javascript:void(0)" name="vendor"   class="catlink" onclick="openCategory(event, 'vendor')">Vendor</a>
-  -->
-  
-</div>
+    </div>
+  </div>
+  <div>
+  <pre>
+    Always use these HTTP Headers when requesting for the service
 
-<div id="customer_services" class="customer services">
-  <a href="javascript:void(0)" name="customer_service_create" class="customer service" onclick="openService(event, 'customer', 'create')">Create</a>
-  <a href="javascript:void(0)" name="customer_service_get" class="customer service" onclick="openService(event, 'customer', 'get')">Get</a>
-  <a href="javascript:void(0)" name="customer_service_update" class="customer service" onclick="openService(event, 'customer', 'update')">Update</a>
-  <a href="javascript:void(0)" name="customer_service_login" class="customer service" onclick="openService(event, 'customer', 'login')">Login</a>
-  <a href="javascript:void(0)" name="customer_service_delete" class="customer service" onclick="openService(event, 'customer', 'delete')">Delete</a>
-</div>
+    <b>Content-Type</b>: application/json
+    <b>Accept</b>: application/json 
 
-<div id="order_services" class="order services">
-  <a href="javascript:void(0)" name="order_service_create" class="order service" onclick="openService(event, 'order, 'create')">Create</a>
-</div>
+  </pre>
+  </div>
 
-<div id="vendor_services" class="vendor services">
-  <a href="javascript:void(0)" name="vendor_service_create" class="vendor service" onclick="openService(event, 'vendor' 'create')">Create</a>
-</div>
 
-<div id="servicedetail" class="customer servicedesc">
-  <table>
-    <tr>
-      <td class="prefix">Name</td>
-      <td class="value"><label id="name"></label><td>
-    </tr>
-    
-     <tr>
-      <td class="prefix">Description</td>
-      <td class="value"><label id="desc"></label><td>
-    </tr>
-    
-     <tr>
-      <td class="prefix">URL</td>
-      <td class="value"><label id="url"></label><td>
-    </tr>
-    
-     <tr>
-      <td class="prefix">Method</td>
-      <td class="value"><label id="method"></label><td>
-    </tr>
-    
-     <tr>
-      <td class="prefix">Data</td>
-      <td class="value"><pre><label id="data"></label></pre><td>
-    </tr>
-  </table>
-</div>
-
-<div>
-<pre>
-Always use these HTTP Headers when requesting for the service
-
- 	<b>Content-Type</b>: application/json
- 	<b>Accept</b>: application/json 
-
-</pre>
-</div>
-
-<div>
-<!--    
+<!--   
 	For example, from a REST client
 	   URL    : <label id="url">http://medmanage.sytes.net/orders/new</label>
 	   TYPE   : <label id="method">Method</label>
@@ -133,7 +113,7 @@ Always use these HTTP Headers when requesting for the service
 <a href="#">/orders/vendor/:contact</a>
 </pre>
 -->
-</div>
+
 </body>
 </html>
 	
