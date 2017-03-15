@@ -330,6 +330,12 @@ exports.getByStatus = function(req, res) {
 		else if (data == "accepted") {
 			status = 1;
 		}
+		else if (data == "transit") {
+			status = 2;
+		}
+		else if (data == "delivered") {
+			status = 3;
+		}
 		else if (data == "rejected") {
 			status = -1;
 		}
