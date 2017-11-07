@@ -9,7 +9,8 @@
     */
 
 var mongoose = require('mongoose'),
-dbURI = 'mongodb://localhost/LiberationPM';
+dbURI='mongodb://admin:admin@cluster0-shard-00-00-amknw.mongodb.net:27017,cluster0-shard-00-01-amknw.mongodb.net:27017,cluster0-shard-00-02-amknw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+//dbURI = 'mongodb://localhost/LiberationPM';
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function() {
