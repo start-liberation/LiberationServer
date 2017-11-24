@@ -1,2 +1,3 @@
 node_modules/
 public/android-debug.apk
+package-lock.json
