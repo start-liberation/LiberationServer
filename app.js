@@ -44,6 +44,7 @@ app.post('/customer/login/:contact', customer.doLogin);		//Login action
 
 
 //VENDOR Services
+app.get('/vendor/all', vendor.list);	// list all vendors irrespective of any filter
 app.post('/vendor/new', vendor.create);	//Register new vendor
 app.get('/vendor/:contact', vendor.profile);	//Get vendor profile
 app.post('/vendor/update/:contact', vendor.udpate);		//Update vendor profile

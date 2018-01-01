@@ -255,7 +255,7 @@ var vendorSchema = new mongoose.Schema({
 	
 });
 
-//Get the customer details using contact
+//Get the vendor details using contact
 vendorSchema.statics.findByContact = function (contact, callback) {
 	this.findOne(
 	{ contact: contact },
@@ -279,6 +279,16 @@ vendorSchema.statics.update = function (vendorData, callback) {
 	{new: true},
 	callback);
 };
+
+// Get all vendors (eventually will have to introduce the notion of proximity ot User)
+vendorSchema.statics.findAll = function (callback) {
+	this.find(
+	{ },
+	'name shopName contact',
+	{sort: 'shopName'},
+	callback);
+};
+
 //Build the Vendor model
 mongoose.model('Vendor', vendorSchema);
 /*****************************************************************

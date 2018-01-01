@@ -218,3 +218,25 @@ exports.udpate = function(req, res) {
 		}
 	});
 };
+
+exports.list = function(req, res) {
+	console.log("Getting all vendors ...");
+	Vendor.findAll(
+		function (err, vendorList) {
+			if(!err) {
+				console.log("Vendor = " + vendorList);
+				if (req.accepts('json')) {
+					console.log("Accepting JSON...");
+					res.json(vendorList);
+				}
+				else {
+					var vendorJSONString = JSON.stringify(vendorList);
+					var vendorJSON = JSON.parse(vendorJSONString);
+					res.render('orders/order-page', {rows : vendorJSON});
+				}
+			} else {
+				console.log("Error: " + err);
+				res.json({"status": "error", "error":"Error finding Vendors"});
+			}
+		});
+};
