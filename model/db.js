@@ -157,7 +157,7 @@ orderSchema.statics.findByOrderId = function (orderId, callback) {
 orderSchema.statics.findByStatus = function (status, callback) {
 	console.log("status : " + JSON.stringify(status));
 	this.find(   {status: parseInt(status)},
-				'orderId status drugList',
+				'orderId status drugList customerContact',
 				{sort: 'orderId'},
 				callback);
 };
