@@ -31,6 +31,7 @@ exports.create = function(req, res) {
 			name : req.body.name,
 			contact : req.body.contact,
 			email : req.body.email,
+			address : req.body.address,
 			modifiedOn : Date.now(),
 			lastLogin : Date.now()
 		}, function(err, user) {
