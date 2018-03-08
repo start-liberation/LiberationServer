@@ -9,8 +9,6 @@
     */
 
 var mongoose = require('mongoose'),
-//dbURI='mongodb://admin:admin@cluster0-shard-00-00-amknw.mongodb.net:27017,cluster0-shard-00-01-amknw.mongodb.net:27017,cluster0-shard-00-02-amknw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
-//dbURI='mongodb://liberation:madhurai@cluster0-shard-00-00-tjqvm.mongodb.net:27017,cluster0-shard-00-01-tjqvm.mongodb.net:27017,cluster0-shard-00-02-tjqvm.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
 dbURI='mongodb://35.225.10.0/LiberationPM';
 //dbURI = 'mongodb://localhost/LiberationPM';
 mongoose.connect(dbURI);
