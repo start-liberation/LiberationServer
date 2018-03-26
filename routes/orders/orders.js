@@ -222,23 +222,30 @@ List Vendor/Customer [with Status] orders  - DONE & TESTED
 
 */
 exports.byContact = function(req, res) {
-	console.log("Getting Orders  for customerContact = " + req.params.contact + ", by Status = "+ req.params.status);
-	if (req.params.contact) {
-		var contactType = "vendorContact";
-		if (req.url.includes("customer")) {
-			contactType = "customerContact";
+	console.log("ByContact: Getting Orders  for customerContact = " + req.params.contact + ", by Status = "+ req.params.status);
+	if (req.params.contact || req.params.status) {
+		if(req.params.status) {
+			jsonParam = { 
+				'status':req.params.status
+				};
 		}
-		console.log("Contact type is : " + contactType);
-		var jsonParam;
-		if(req.params.status !== null) {
-			jsonParam = { 
-					[contactType] : req.params.contact, 
-					'status':req.params.status
-					};
-		} else {
-			jsonParam = { 
-					[contactType] : req.params.contact
-					};
+		if(req.params.contact) {
+			var contactType = "vendorContact";
+			if (req.url.includes("customer")) {
+				contactType = "customerContact";
+			}
+			console.log("Contact type is : " + contactType);
+			var jsonParam;
+			if(req.params.status !== null) {
+				jsonParam = { 
+						[contactType] : req.params.contact, 
+						'status':req.params.status
+						};
+			} else {
+				jsonParam = { 
+						[contactType] : req.params.contact
+						};
+			}
 		}
 		Order.findByStatus(
 			jsonParam,
@@ -247,7 +254,7 @@ exports.byContact = function(req, res) {
 					console.log("Order = " + JSON.stringify(orderList));
 					if (req.accepts('json')) {
 						console.log("Accepting JSON...");
-						res.json(orderList);
+						res.status(200).send(orderList);
 					}
 					else {
 						var orderJSONString = JSON.stringify(orderList);
@@ -256,12 +263,12 @@ exports.byContact = function(req, res) {
 					}
 				} else {
 					console.log("Error: " + err);
-					res.json({"status": "error", "error":"Error finding Orders"});
+					res.status(404).send({"status": "error", "error":"Error finding Orders"});
 				}
 			});
 	} else {
 		console.log("No order ID supplied");
-		res.send({"status": "error", "error": "No user contact supplied"});
+		res.status(400).send({"status": "error", "error": "No user contact or order status supplied"});
 	}
 };
 /**

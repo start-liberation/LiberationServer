@@ -38,7 +38,7 @@ exports.create = function(req, res) {
 			if (err) {
 				// An error in creating a customer
 				if (req.accepts('json')) {
-					res.json({'code' : 501, 'message' : 'Failed to register customer', 'contact' : req.body.contact});
+					res.send(501, {'code' : 501, 'message' : 'Failed to register customer', 'contact' : req.body.contact});
 				} else {
 					// TODO Use res.render
 					res.writeHead(501, {'Content-Type' : 'text/html'});
@@ -51,7 +51,7 @@ exports.create = function(req, res) {
 			} else {
 				// Let them know it was successfully created
 				if (req.accepts('json')) {
-					res.json({
+					res.send(200, {
 						"code" : 200,
 						"message" : "Customer created successfully!",
 						"contact" : user.contact
@@ -79,7 +79,7 @@ exports.create = function(req, res) {
 				// report that the user already exists
 				// Its much cleaner this way
 				console.log("customer registered: " + req.body.contact);
-				res.json({
+				res.send(200, {
 					"code" : 200,
 					"message" : "Customer is already registered: ",
 					"contact" : user.contact
@@ -157,7 +157,7 @@ exports.profile = function(req, res) {
 			if (!err) {
 				
 				if (profile === null) {
-					res.json({"status":"failed", "Message":"Failed to find a customer with contact = " + req.params.contact});
+					res.send(404, {"status":"failed", "Message":"Failed to find a customer with contact = " + req.params.contact});
 				}
  				else {
 					console.log("customer profile = " + profile);
@@ -175,7 +175,7 @@ exports.profile = function(req, res) {
  				}
 			} else {
 				console.log("Error: " + err);
-				res.json({
+				res.send(400, {
 					"status" : "error",
 					"error" : "Error finding Customer with contact: " + req.params.contact
 				});
@@ -183,7 +183,7 @@ exports.profile = function(req, res) {
 		});
 	} else {
 		console.log("No user contact supplied");
-		res.json({
+		res.send(400, {
 			"status" : "error",
 			"error" : "No contact supplied"
 		});
@@ -243,7 +243,7 @@ exports.udpate = function(req, res) {
 			// SUCCESS
 			if (req.accepts('json')) {
 				console.log("Success");
-				res.json(doc);
+				res.send(200, doc);
 			} else {
 				res.writeHead(200, {
 					'Content-Type' : 'text/html'

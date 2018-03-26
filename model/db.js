@@ -9,8 +9,11 @@
     */
 
 var mongoose = require('mongoose'),
-dbURI='mongodb://35.225.10.0/LiberationPM';
 //dbURI = 'mongodb://localhost/LiberationPM';
+//dbURI='mongodb://admin:admin@cluster0-shard-00-00-amknw.mongodb.net:27017,cluster0-shard-00-01-amknw.mongodb.net:27017,cluster0-shard-00-02-amknw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+//dbURI='mongodb://liberation:madhurai@cluster0-shard-00-00-tjqvm.mongodb.net:27017,cluster0-shard-00-01-tjqvm.mongodb.net:27017,cluster0-shard-00-02-tjqvm.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+//dbURI='mongodb://35.225.10.0/LiberationPM';
+dbURI = 'mongodb://localhost/LiberationPM';
 mongoose.connect(dbURI);
 
 mongoose.connection.on('connected', function() {
@@ -153,11 +156,45 @@ orderSchema.statics.findByOrderId = function (orderId, callback) {
 
 //Find user orders with status new - to show on orders list by status to a vendor - DONE & TESTED
 orderSchema.statics.findByStatus = function (status, callback) {
-	console.log("status : " + JSON.stringify(status));
-	this.find(   {status: parseInt(status)},
-				'orderId status drugList customerContact',
-				{sort: 'orderId'},
-				callback);
+	console.log("status JSON Object is : " + JSON.stringify(status));
+	console.log("status: " + status.status);
+	console.log("customerContact : " + status.customerContact);
+	console.log("vendorContact: " + status.vendorContact);
+	if(status.status != undefined) {
+		if(status.customerContact != undefined) {
+			console.log("Find by status + customerContact");
+			this.find(   {status: parseInt(status.status), customerContact: status.customerContact},
+						'orderId status drugList customerContact vendorContact',
+						{sort: 'orderId'},
+						callback);
+		} else if(status.vendorContact != undefined) {
+			console.log("Find by status + vendorContact");
+			this.find(   {status: parseInt(status.status), vendorContact: status.vendorContact},
+						'orderId status drugList customerContact vendorContact',
+						{sort: 'orderId'},
+						callback);
+		} else {
+			console.log("Find by status");
+			this.find(   {status: parseInt(status.status)},
+						'orderId status drugList customerContact vendorContact',
+						{sort: 'orderId'},
+						callback);
+		}
+	} else {
+		if(status.customerContact != undefined) {
+			console.log("Find by customerContact");
+			this.find({customerContact: status.customerContact},
+						'orderId status drugList customerContact vendorContact',
+						{sort: 'orderId'},
+						callback);
+		} else if(status.vendorContact != undefined) {
+			console.log("Find by vendorContact");
+			this.find({vendorContact: status.vendorContact},
+						'orderId status drugList customerContact vendorContact',
+						{sort: 'orderId'},
+						callback);
+		}
+	}
 };
 
 // Update Order status - DONE & TESTED

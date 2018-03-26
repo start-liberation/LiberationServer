@@ -115,13 +115,13 @@ exports.profile = function(req, res) {
 			if (!err) {
 				
 				if (profile === null) {
-					res.json({"status":"failed", "Message":"Failed to find a vendor with contact = " + req.params.contact});
+					res.send(404, {"status":"failed", "Message":"Failed to find a vendor with contact = " + req.params.contact});
 				}
  				else {
 					console.log("vendor profile = " + profile);
 					if (req.accepts('json')) {
 						console.log("Accepting JSON...");
-						res.json(profile);
+						res.send(200, profile);
 					} else {
 						var profileJSONString = JSON.stringify(profile);
 						var profileJSON = JSON.parse(profileJSONString);
@@ -133,7 +133,7 @@ exports.profile = function(req, res) {
  				}
 			} else {
 				console.log("Error: " + err);
-				res.json({
+				res.send(404, {
 					"status" : "error",
 					"error" : "Error finding Vendor with contact: " + req.params.contact
 				});
@@ -141,7 +141,7 @@ exports.profile = function(req, res) {
 		});
 	} else {
 		console.log("No vendor contact supplied");
-		res.json({
+		res.send(400, {
 			"status" : "error",
 			"error" : "No contact supplied"
 		});
@@ -227,7 +227,7 @@ exports.list = function(req, res) {
 				console.log("Vendor = " + vendorList);
 				if (req.accepts('json')) {
 					console.log("Accepting JSON...");
-					res.json(vendorList);
+					res.send(200, vendorList);
 				}
 				else {
 					var vendorJSONString = JSON.stringify(vendorList);
@@ -236,7 +236,7 @@ exports.list = function(req, res) {
 				}
 			} else {
 				console.log("Error: " + err);
-				res.json({"status": "error", "error":"Error finding Vendors"});
+				res.send(400, {"status": "error", "error":"Error finding Vendors"});
 			}
 		});
 };
