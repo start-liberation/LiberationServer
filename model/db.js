@@ -156,26 +156,48 @@ orderSchema.statics.findByOrderId = function (orderId, callback) {
 
 //Find user orders with status new - to show on orders list by status to a vendor - DONE & TESTED
 orderSchema.statics.findByStatus = function (status, callback) {
+	var Status = { NEW:"new", ACCEPTED:"accepted", TRANSIT:"transit", DELIVERED:"delivered", REJECTED:"rejected"};
 	console.log("status JSON Object is : " + JSON.stringify(status));
 	console.log("status: " + status.status);
 	console.log("customerContact : " + status.customerContact);
 	console.log("vendorContact: " + status.vendorContact);
 	if(status.status != undefined) {
+		var statusNum = 0;
+		if(isNaN(status.status)) {
+			switch(status.status) {
+				case Status.NEW: 
+					statusNum = 0;
+					break;
+				case status.ACCEPTED:
+					statusNum = 1;
+					break;
+				case status.TRANSIT:
+					statusNum = 2;
+					break;
+				case status.DELIVERED:
+					statusNum = 3;
+					break;
+				case status.REJECTED:
+					statusNum = 4;
+					break;
+			}
+		}
+
 		if(status.customerContact != undefined) {
 			console.log("Find by status + customerContact");
-			this.find(   {status: parseInt(status.status), customerContact: status.customerContact},
+			this.find(   {status: statusNum, customerContact: status.customerContact},
 						'orderId status drugList customerContact vendorContact',
 						{sort: 'orderId'},
 						callback);
 		} else if(status.vendorContact != undefined) {
 			console.log("Find by status + vendorContact");
-			this.find(   {status: parseInt(status.status), vendorContact: status.vendorContact},
+			this.find(   {status: statusNum, vendorContact: status.vendorContact},
 						'orderId status drugList customerContact vendorContact',
 						{sort: 'orderId'},
 						callback);
 		} else {
 			console.log("Find by status");
-			this.find(   {status: parseInt(status.status)},
+			this.find(   {status: statusNum},
 						'orderId status drugList customerContact vendorContact',
 						{sort: 'orderId'},
 						callback);
